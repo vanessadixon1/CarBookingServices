@@ -1,21 +1,20 @@
 package com.amcsoftware.carbookingservices.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 @Entity
 public class Car {
     @Id
@@ -47,23 +46,21 @@ public class Car {
         this.price = price;
     }
 
-
-//    public void addReservation(Reservation reservation) {
-//        if(!reservations.contains(reservation)) {
-//            reservations.add(reservation);
-//            reservation.setCar(this);
-//        }
-//    }
-//
-//    public void removeReservations(Reservation reservation) {
-//        if(this.reservations.contains(reservation)) {
-//            reservations.remove(reservation);
-//            reservation.setCar(null);
-//        }
-//    }
-
     @JsonBackReference
     public Reservation getReservations() {
         return reservations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Car car = (Car) o;
+        return car_id != null && Objects.equals(car_id, car.car_id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
