@@ -2,7 +2,6 @@ package com.amcsoftware.carbookingservices.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,7 +19,7 @@ public class Car {
     @Id
     @GeneratedValue
     @Column(name = "car_id", updatable = false)
-    private UUID car_id;
+    private UUID carId;
     @Column(name = "make",  columnDefinition = "TEXT")
     private String make;
     @Column(name = "model", columnDefinition = "TEXT")
@@ -35,8 +34,8 @@ public class Car {
     public Car() {
     }
 
-    public Car(UUID car_id) {
-        this.car_id = car_id;
+    public Car(UUID carId) {
+        this.carId = carId;
     }
 
     public Car(String make, String model, int year, BigDecimal price) {
@@ -56,7 +55,7 @@ public class Car {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Car car = (Car) o;
-        return car_id != null && Objects.equals(car_id, car.car_id);
+        return carId != null && Objects.equals(carId, car.carId);
     }
 
     @Override

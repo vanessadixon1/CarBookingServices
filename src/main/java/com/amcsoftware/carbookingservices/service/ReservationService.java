@@ -25,7 +25,7 @@ public class ReservationService extends ReservationJpaDataAccessService {
 
     public List<Reservation> findAllReservations() {
         if(reservationCount() != 0) {
-            return findAllReservations();
+            return getAllReservations();
         } else {
             throw new NullPointerException("no reservations available");
         }

@@ -25,7 +25,7 @@ public class reservationController {
     @ResponseBody
     @GetMapping()
     public List<Reservation> getReservations() {
-        member.getReservations().forEach(System.out::println);
+
         return reservationService.findAllReservations();
     }
 

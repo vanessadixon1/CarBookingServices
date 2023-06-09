@@ -1,6 +1,8 @@
 package com.amcsoftware.carbookingservices.jpaDataAccess;
 
+import com.amcsoftware.carbookingservices.dao.CarDao;
 import com.amcsoftware.carbookingservices.dao.ReservationDao;
+import com.amcsoftware.carbookingservices.model.Car;
 import com.amcsoftware.carbookingservices.model.Member;
 import com.amcsoftware.carbookingservices.model.Reservation;
 import com.amcsoftware.carbookingservices.repository.MemberRepository;
@@ -12,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class ReservationJpaDataAccessService implements ReservationDao {
+public class ReservationJpaDataAccessService implements ReservationDao  {
     private final MemberRepository memberRepository;
     private final ReservationRepository reservationRepository;
 
@@ -102,8 +104,14 @@ public class ReservationJpaDataAccessService implements ReservationDao {
     }
 
     @Override
+    public boolean reservationContainCar(Car car) {
+        return reservationRepository.existsReservationByCar(car);
+    }
+
+    @Override
     public Member findMemberById(UUID id) {
         return memberRepository.findByUserId(id);
     }
+
 
 }

@@ -1,5 +1,6 @@
 package com.amcsoftware.carbookingservices.dao;
 
+import com.amcsoftware.carbookingservices.model.Car;
 import com.amcsoftware.carbookingservices.model.Reservation;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface ReservationDao extends MemberDao {
     boolean existsById(UUID id);
     void deleteReservation(Reservation reservation);
     Optional<Reservation> findReservationById(UUID id);
+    boolean reservationContainCar(Car car);
+
 }
