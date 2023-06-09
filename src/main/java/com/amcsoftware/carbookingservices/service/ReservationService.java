@@ -10,7 +10,12 @@ import com.amcsoftware.carbookingservices.repository.MemberRepository;
 import com.amcsoftware.carbookingservices.repository.ReservationRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,7 +49,9 @@ public class ReservationService {
     public void addReservation(Reservation reservation) {
         Member locateMember = memberRepository.findByUserId(reservation.getMember().getUserId());
 
-        if(!locateMember.getReservations().contains(reservation)) {
+        if(!locateMember.getReservations().contains(reservation) &&
+                reservation.getPickupDate().isAfter(LocalDate.now().minus(1L, ChronoUnit.DAYS)) &&
+                reservation.getReturnDate().isAfter(LocalDate.now())) {
             reservation.setCreateAt(LocalDateTime.now());
             locateMember.getReservations().add(reservation);
             reservationRepository.save(reservation);
@@ -71,5 +78,30 @@ public class ReservationService {
                  new ResourceNotFound("reservation [%s]".formatted(reservationId) + " doesn't exist"));
     }
 
+
+    public void updateReservation(UUID reservationId, Reservation reservation) {
+        Reservation locatedReservation = findReservation(reservationId);
+        if(!reservation.getCar().equals(locatedReservation.getCar())) {
+            locatedReservation.setCar(reservation.getCar());
+        }
+
+        if(reservation.getMember().equals(locatedReservation.getMember())) {
+            throw new IllegalArgumentException("unable to update user " +
+                    locatedReservation.getMember().getUserId() + " to " + reservation.getMember().getUserId() + " delete reservation and then try again");
+        }
+
+        if(!reservation.getPickupDate().equals(locatedReservation.getPickupDate())) {
+            locatedReservation.setPickupDate(reservation.getPickupDate());
+        }
+
+        if(!reservation.getReturnDate().equals(locatedReservation.getReturnDate())) {
+            locatedReservation.setReturnDate(reservation.getReturnDate());
+        }
+
+        locatedReservation.setCreateAt(LocalDateTime.now());
+
+        reservationRepository.save(locatedReservation);
+
+    }
 
 }

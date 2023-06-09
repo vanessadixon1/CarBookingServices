@@ -110,18 +110,6 @@ public class Member {
         this.zipCode = zipCode;
     }
 
-    public void addReservation(Reservation reservation) {
-        if(!reservations.contains(reservation)) {
-            reservations.add(reservation);
-        }
-    }
-
-    public void removeReservation(Reservation reservation) {
-        if(reservations.contains(reservation)) {
-            reservations.add(reservation);
-        }
-    }
-
     @JsonManagedReference
     public List<Reservation> getReservations() {
         return reservations;

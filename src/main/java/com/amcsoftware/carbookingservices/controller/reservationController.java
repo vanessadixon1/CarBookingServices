@@ -30,7 +30,7 @@ public class reservationController {
     }
 
     @ResponseBody
-    @PostMapping()
+    @PostMapping("/create")
     public ResponseEntity<CustomResponse> addReservations(@RequestBody Reservation reservation) {
          reservationService.addReservation(reservation);
          CustomResponse response = new CustomResponse();
@@ -40,14 +40,25 @@ public class reservationController {
          return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @DeleteMapping("/{reservationId}")
+    @DeleteMapping("delete/{reservationId}")
     public ResponseEntity<CustomResponse> deleteReservation(@PathVariable("reservationId") UUID reservationId) {
         reservationService.removeReservation(reservationId);
 
         CustomResponse response = new CustomResponse();
         response.setMessage("reservation id " + reservationId + " has been removed successfully");
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<CustomResponse> updateReservation(@PathVariable UUID id, @RequestBody Reservation reservation) {
+
+        reservationService.updateReservation(id, reservation);
+
+        CustomResponse response = new CustomResponse();
+        response.setMessage("reservation id " + id + " has been updated successfully");
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
 

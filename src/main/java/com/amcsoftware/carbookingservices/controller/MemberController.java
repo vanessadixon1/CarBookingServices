@@ -44,4 +44,12 @@ public class MemberController {
         return memberService.findMemberByEmail(email);
     }
 
+    @DeleteMapping("/delete/{email}")
+    public ResponseEntity<CustomResponse> deleteMember(@PathVariable("email") String email) {
+        memberService.deleteMember(email);
+        CustomResponse response = new CustomResponse();
+        response.setMessage("Member with email address:  " + email  + " has been deleted successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }

@@ -58,4 +58,14 @@ public class MemberService {
                 .orElseThrow(() -> new ResourceNotFound("uer [%s] ".formatted(userId) + " was not found") );
     }
 
+    public void deleteMember(String email) {
+        Member locatedMember = memberRepository.findMemberByEmail(email);
+        if(locatedMember.getReservations().size() == 0) {
+            memberRepository.delete(locatedMember);
+        } else {
+            throw new IllegalArgumentException("in order to delete the user you must remove the reservation(s) booked by the user");
+        }
+
+    }
+
 }

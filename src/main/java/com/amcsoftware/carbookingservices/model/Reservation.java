@@ -42,15 +42,7 @@ public class Reservation {
     private LocalDate returnDate;
     @Column(name = "create_at", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDateTime createAt;
-
-
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "car_id", referencedColumnName = "car_id", foreignKey = @ForeignKey(name = "car_id_fk"))
-//    private Car car;
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "user_id_fk"))
-//    private Member member;
-
+    
     public Reservation() {
     }
 
