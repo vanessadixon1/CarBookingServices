@@ -73,7 +73,7 @@ public class ReservationService extends ReservationJpaDataAccessService {
             locatedReservation.setCar(reservation.getCar());
         }
 
-        if(reservation.getMember().equals(locatedReservation.getMember())) {
+        if(!reservation.getMember().equals(locatedReservation.getMember())) {
             throw new IllegalArgumentException("unable to update user " +
                     locatedReservation.getMember().getUserId() + " to " + reservation.getMember().getUserId() +
                     " delete reservation and then try again");

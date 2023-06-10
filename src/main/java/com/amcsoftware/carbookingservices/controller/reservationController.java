@@ -30,7 +30,7 @@ public class reservationController {
     }
 
     @ResponseBody
-    @PostMapping("/create")
+    @PostMapping("/book")
     public ResponseEntity<CustomResponse> addReservations(@RequestBody Reservation reservation) {
          reservationService.addReservation(reservation);
          CustomResponse response = new CustomResponse();

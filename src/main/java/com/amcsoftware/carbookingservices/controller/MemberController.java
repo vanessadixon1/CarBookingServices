@@ -20,7 +20,7 @@ public class MemberController {
 
     @PostMapping("/registration")
     public ResponseEntity<CustomResponse> registerUser(@RequestBody Member member) {
-        memberService.saveMember(member);
+        memberService.saveUserInfo(member);
         CustomResponse response = new CustomResponse();
         response.setMessage("successfully created");
 
@@ -34,14 +34,14 @@ public class MemberController {
 
     @ResponseBody
     @GetMapping("/")
-    public Member getMembers(@RequestParam(value = "lastName") String lastName, @RequestParam(value = "email") String email) {
+    public Member getMembers(@RequestParam(value = "lastname") String lastName, @RequestParam(value = "email") String email) {
         return memberService.findLastNameAndEmail(lastName, email);
     }
 
     @ResponseBody
     @GetMapping("/{email}")
     public Member getMembers(@PathVariable("email") String email) {
-        return memberService.findMemberByEmail(email);
+        return memberService.findMemberWithEmail(email);
     }
 
     @DeleteMapping("/delete/{email}")
@@ -51,5 +51,14 @@ public class MemberController {
         response.setMessage("Member with email address:  " + email  + " has been deleted successfully");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PutMapping("/update/{email}")
+    public ResponseEntity<CustomResponse> updateMember(@PathVariable("email") String email, @RequestBody Member member) {
+        memberService.updateMember(email, member);
+        CustomResponse response = new CustomResponse();
+        response.setMessage("updated successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 
 }

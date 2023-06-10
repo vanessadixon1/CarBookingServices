@@ -14,4 +14,6 @@ public interface CarDao extends ReservationDao{
     Car findCarById(UUID id);
     boolean carExistById(UUID id);
     void removeCar(Car car);
+    void saveCar(Car car);
+    void saveAllCars(List<Car> cars);
 }

@@ -27,17 +27,21 @@ public class CarService extends CarJpaDataAccessService {
     }
 
     public List<Car> getCars(String make) {
-        if(carCount() == 0 || !carExistByMake(make)) {
+        String locateMake = make.substring(0,1).toUpperCase() + make.substring(1);
+        if(carCount() == 0 || !carExistByMake(locateMake)) {
             throw new ResourceNotFound("The make [%s]".formatted(make) + " was not found");
         }
-        return getAllCars(make);
+        System.out.println();
+        return getAllCars(locateMake);
     }
 
     public List<Car> getCars(String make, String model) {
-        if(carCount() == 0 || (!carExistByMake(make) && !carExistByMake(model))) {
+        String locateMake = make.substring(0,1).toUpperCase() + make.substring(1);
+        String locateModel = model.substring(0,1).toUpperCase() + model.substring(1);
+        if(carCount() == 0 || (!carExistByMake(locateMake) && !carExistByMake(locateModel))) {
             throw new ResourceNotFound("The make [%s]".formatted(make) + " model [%s]".formatted(model) +  "  was not found");
         }
-        return getAllCars(make,model);
+        return getAllCars(locateMake,locateModel);
     }
 
     public void removeCarWithId(UUID id) {
@@ -73,9 +77,11 @@ public class CarService extends CarJpaDataAccessService {
             locatedCar.setYear(car.getYear());
         }
 
-        if(!locatedCar.getMake().equals(car.getMake())) {
+        if(!locatedCar.getPrice().equals(car.getPrice())) {
             locatedCar.setPrice(car.getPrice());
         }
+
+        saveCar(locatedCar);
 
     }
 

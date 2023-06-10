@@ -35,7 +35,6 @@ public class carController {
         return carService.getCars(make, model);
     }
 
-
     @DeleteMapping("/removeCar/{id}")
     public ResponseEntity<CustomResponse> removeCarWithId(@PathVariable("id") UUID id) {
         carService.removeCarWithId(id);

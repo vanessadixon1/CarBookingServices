@@ -67,6 +67,16 @@ public class CarJpaDataAccessService implements CarDao {
     }
 
     @Override
+    public void saveCar(Car car) {
+        carRepository.save(car);
+    }
+
+    @Override
+    public void saveAllCars(List<Car> cars) {
+        carRepository.saveAll(cars);
+    }
+
+    @Override
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
     }

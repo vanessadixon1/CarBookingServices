@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Service
 public class MemberService extends MemberJpaDataAccessService {
@@ -17,7 +18,18 @@ public class MemberService extends MemberJpaDataAccessService {
         super(memberRepository);
     }
 
-    public void saveMember(Member member) {
+    public void saveUserInfo(Member member) {
+        boolean isPhoneNumberValid = Pattern.compile("^(\\d{3}[-]?){2}\\d{4}$").matcher(member.getPhoneNumber()).matches();
+
+        boolean isEmailValid = Pattern.compile("[a-zA-Z0-9]{1,}[@]{1}[a-z]{5,}[.]{1}+[a-z]{3}").matcher(member.getEmail()).matches();
+        if(!isEmailValid) {
+            throw new IllegalArgumentException("email %s".formatted(member.getEmail()) + " is invalid" );
+        }
+
+        if(!isPhoneNumberValid) {
+            throw new IllegalArgumentException("email [%s]".formatted(member.getPhoneNumber()) + " is invalid" );
+        }
+
         if(!existsByEmail(member.getEmail())) {
             member.setFirstName(member.getFirstName().substring(0,1).toUpperCase() +
                     member.getFirstName().substring(1));
@@ -37,14 +49,24 @@ public class MemberService extends MemberJpaDataAccessService {
     }
 
     public Member findLastNameAndEmail(String lastName, String email) {
+        boolean isEmailValid = Pattern.compile("[a-zA-Z0-9]{1,}[@]{1}[a-z]{5,}[.]{1}+[a-z]{3}").matcher(email).matches();
+//        String lastname = lastName.substring(0,1).toUpperCase() + lastName.substring(1);
+        if(!isEmailValid) {
+            throw new IllegalArgumentException("email [%s]".formatted(email) + " is invalid" );
+        }
         if(existsByLastNameAndEmail(lastName,email)) {
             return findMemberByLastNameAndEmail(lastName, email);
         } else {
-            throw new ResourceNotFound("the lastName [%s]".formatted(lastName) + " and email: [%s] ".formatted(email) + " doesn't exist");
+            throw new ResourceNotFound("the lastName %s".formatted(lastName) + " and email: %s ".formatted(email) + "doesn't exist");
         }
     }
 
-    public Member findMemberByEmail(String email) {
+    public Member findMemberWithEmail(String email) {
+        boolean isEmailValid = Pattern.compile("[a-zA-Z0-9]{1,}[@]{1}[a-z]{5,}[.]{1}+[a-z]{3}").matcher(email).matches();
+        if(!isEmailValid) {
+            throw new IllegalArgumentException("email [%s]".formatted(email) + " is invalid" );
+        }
+
         if(existsByEmail(email)) {
             return findMemberByEmail(email);
         }else {
@@ -58,13 +80,81 @@ public class MemberService extends MemberJpaDataAccessService {
     }
 
     public void deleteMember(String email) {
-        Member locatedMember = findMemberByEmail(email);
-        if(locatedMember.getReservations().size() == 0) {
-            deleteMember(locatedMember);
-        } else {
-            throw new IllegalArgumentException("in order to delete the user you must remove the reservation(s) booked by the user");
+
+        boolean isEmailValid = Pattern.compile("[a-zA-Z0-9]{1,}[@]{1}[a-z]{5,}[.]{1}+[a-z]{3}").matcher(email).matches();
+        if(!isEmailValid) {
+            throw new IllegalArgumentException("email [%s]".formatted(email) + " is invalid" );
         }
 
+        Member locatedMember = findMemberByEmail(email);
+
+        if(locatedMember.getReservations().size() == 0 ) {
+            deleteMember(locatedMember);
+        } else {
+            throw new IllegalArgumentException("unsuccessful deletion - user has " + locatedMember.getReservations().size() + " reservation booked" );
+        }
+    }
+
+    public void updateMember(String email, Member member) {
+        boolean isUpdatingEmailValid = Pattern.compile("[a-zA-Z0-9]{1,}[@]{1}[a-z]{5,}[.]{1}+[a-z]{3}").matcher(member.getEmail()).matches();
+        boolean isEmailValid = Pattern.compile("[a-zA-Z0-9]{1,}[@]{1}[a-z]{5,}[.]{1}+[a-z]{3}").matcher(email).matches();
+
+        if(!isEmailValid || !isUpdatingEmailValid) {
+            throw new IllegalArgumentException("email %s" + " is invalid" );
+        }
+
+        if(!existsByEmail(email)) {
+            throw new ResourceNotFound("no user with email %s".formatted(email) + " found");
+        }
+        Member locatedMember = findMemberByEmail(email);
+        System.out.println(locatedMember.getFirstName());
+
+        if(!locatedMember.getFirstName().equals(member.getEmail())) {
+            locatedMember.setFirstName(member.getFirstName());
+        }
+
+        if(!locatedMember.getLastName().equals(member.getLastName())) {
+            locatedMember.setLastName(member.getLastName());
+        }
+
+        if(locatedMember.getMiddleInitial() == null || !locatedMember.getMiddleInitial().equals(member.getMiddleInitial())) {
+            locatedMember.setMiddleInitial("");
+            locatedMember.setMiddleInitial(member.getMiddleInitial());
+        }
+
+        if(!locatedMember.getPhoneNumber().equals(member.getPhoneNumber())) {
+            locatedMember.setPhoneNumber(member.getPhoneNumber());
+        }
+
+        if(!locatedMember.getEmail().equals(member.getEmail())) {
+            locatedMember.setEmail(member.getEmail());
+        }
+
+        if(!locatedMember.getDateOfBirth().equals(member.getDateOfBirth())) {
+            locatedMember.setDateOfBirth(member.getDateOfBirth());
+        }
+
+        if(locatedMember.getStreetNo() != member.getStreetNo()) {
+            locatedMember.setStreetNo(member.getStreetNo());
+        }
+
+        if(!locatedMember.getStreetAddress().equals(member.getStreetAddress())) {
+            locatedMember.setStreetAddress(member.getStreetAddress());
+        }
+
+        if(!locatedMember.getCity().equals(member.getCity())) {
+            locatedMember.setCity(member.getCity());
+        }
+
+        if(locatedMember.getZipCode() != member.getZipCode()) {
+            locatedMember.setZipCode(member.getZipCode());
+        }
+
+        if(!locatedMember.getState().equals(member.getState())) {
+            locatedMember.setState(member.getState());
+        }
+
+        saveMember(locatedMember);
     }
 
 }
