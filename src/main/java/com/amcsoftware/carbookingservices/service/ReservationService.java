@@ -36,14 +36,34 @@ public class ReservationService extends ReservationJpaDataAccessService {
     }
 
     public void addReservation(Reservation reservation) {
+        //todo: validate no one has the car that the user is trying to reserve before booking
+        //todo: redo method
+
         Member locateMember = findMemberById(reservation.getMember().getUserId());
 
-        if(!locateMember.getReservations().contains(reservation) &&
+        if(reservationContainCar(reservation.getCar())) {
+            Reservation res = findReservationByCar(reservation.getCar());
+            LocalDate currentBorrowerReturnDate = res.getReturnDate();
+            if(currentBorrowerReturnDate.isBefore(reservation.getPickupDate()) &&
+                    reservation.getPickupDate().isAfter(LocalDate.now().minus(1L, ChronoUnit.DAYS)) &&
+                    reservation.getReturnDate().isAfter(LocalDate.now())) {
+                reservation.setCreateAt(LocalDateTime.now());
+
+                locateMember.getReservations().add(reservation);
+
+                saveReservation(reservation);
+
+            }
+        }else if(!locateMember.getReservations().contains(reservation) && !reservationContainCar(reservation.getCar()) &&
                 reservation.getPickupDate().isAfter(LocalDate.now().minus(1L, ChronoUnit.DAYS)) &&
                 reservation.getReturnDate().isAfter(LocalDate.now())) {
+
             reservation.setCreateAt(LocalDateTime.now());
+
             locateMember.getReservations().add(reservation);
+
             saveReservation(reservation);
+
         } else {
             throw new ResourceExist("reservation [%s] ".formatted(reservation)+ " already exist");
         }

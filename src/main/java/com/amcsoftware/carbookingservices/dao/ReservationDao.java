@@ -16,5 +16,6 @@ public interface ReservationDao extends MemberDao {
     void deleteReservation(Reservation reservation);
     Optional<Reservation> findReservationById(UUID id);
     boolean reservationContainCar(Car car);
+    Reservation findReservationByCar(Car car);
 
 }

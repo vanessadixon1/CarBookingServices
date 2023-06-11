@@ -10,19 +10,14 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
-//Mapping this class to a Table in my database
 @Getter
 @Setter
 @ToString
 @Entity
 @Table(name = "member", uniqueConstraints = {
-        @UniqueConstraint(name = "member_email_unique", columnNames = "email")
-})
+        @UniqueConstraint(name = "member_email_unique", columnNames = "email")})
 public class Member {
     @Id
     @GeneratedValue
@@ -119,8 +114,4 @@ public class Member {
         return userId != null && Objects.equals(userId, member.userId);
     }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

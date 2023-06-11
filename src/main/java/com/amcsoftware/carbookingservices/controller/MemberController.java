@@ -20,8 +20,11 @@ public class MemberController {
 
     @PostMapping("/registration")
     public ResponseEntity<CustomResponse> registerUser(@RequestBody Member member) {
-        memberService.saveUserInfo(member);
+
+        memberService.userRegistrationInfo(member);
+
         CustomResponse response = new CustomResponse();
+
         response.setMessage("successfully created");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

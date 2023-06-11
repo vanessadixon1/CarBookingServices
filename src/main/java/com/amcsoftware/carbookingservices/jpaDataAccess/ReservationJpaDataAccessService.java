@@ -109,6 +109,11 @@ public class ReservationJpaDataAccessService implements ReservationDao  {
     }
 
     @Override
+    public Reservation findReservationByCar(Car car) {
+        return reservationRepository.findReservationByCar(car);
+    }
+
+    @Override
     public Member findMemberById(UUID id) {
         return memberRepository.findByUserId(id);
     }
