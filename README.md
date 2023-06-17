@@ -61,13 +61,13 @@
 # Clone this repository
 $ git https://github.com/vanessadixon1/CarBookingServices.git
 
-## Go into the repository
+# Go into the repository
 #$ cd electron-markdownify
-#
-## Install dependencies
+
+# Install dependencies
 #$ npm install
-#
-## Run the app
+
+# Run the app
 #$ npm start
 ```
 
@@ -86,21 +86,27 @@ $ git https://github.com/vanessadixon1/CarBookingServices.git
 
 ## Credits
 
-[//]: # (This software uses the following open source packages:)
+This software uses the following open source packages:
 
-[//]: # ()
+
 [//]: # (- [Electron]&#40;http://electron.atom.io/&#41;)
 
+[//]: # ()
 [//]: # (- [Node.js]&#40;https://nodejs.org/&#41;)
 
+[//]: # ()
 [//]: # (- [Marked - a markdown parser]&#40;https://github.com/chjj/marked&#41;)
 
+[//]: # ()
 [//]: # (- [showdown]&#40;http://showdownjs.github.io/showdown/&#41;)
 
+[//]: # ()
 [//]: # (- [CodeMirror]&#40;http://codemirror.net/&#41;)
 
+[//]: # ()
 [//]: # (- Emojis are taken from [here]&#40;https://github.com/arvida/emoji-cheat-sheet.com&#41;)
 
+[//]: # ()
 [//]: # (- [highlight.js]&#40;https://highlightjs.org/&#41;)
 
 ## Related
