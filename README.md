@@ -34,7 +34,7 @@
 
 </p>
 
-![screenshot](https://GitHub.com/vanessadixon1/CarBookingServices/main/src/main/resources/static/Recording#2.mp4)
+![screenshot](https://GitHub.com/vanessadixon1/CarBookingServices/main/src/main/resources/static/R.gif)
 
 ## Key Features
 
