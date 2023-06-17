@@ -62,13 +62,13 @@
 $ git https://github.com/vanessadixon1/CarBookingServices.git
 
 # Go into the repository
-# cd electron-markdownify
+#$ cd 
 
 # Install dependencies
-# npm install
+#$ npm install
 
 # Run the app
-# npm start
+$ npm start
 ```
 
 > **Note**
