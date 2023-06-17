@@ -1,9 +1,8 @@
 # 
 <h1 align="center">
   <br>
-	![image](https://github.com/vanessadixon1/CarBookingServices/assets/53667448/abfcf662-6147-44f1-8a64-2443edd8370a)
-
-  <a href=""><img src="=" alt="CarBooking" width="200"></a>
+	
+  <img src="=" alt="CarBooking" width="200">
   <br>
   Java Springs CarBooking Services 
   <br>
