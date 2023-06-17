@@ -32,7 +32,7 @@
   <a href="#license">License</a>
 </p>
 
-!(src/main/resources/static/Recording #2.mp4)
+![screenshot](src/main/resources/static/Recording #2.mp4)
 
 ## Key Features
 
