@@ -1,16 +1,15 @@
 # 
 <h1 align="center">
-  <br>
-	
+<!--   <br>
   <img src="=" alt="CarBooking" width="200">
-  <br>
+  <br> -->
   Java Springs CarBooking Services 
   <br>
 </h1>
 
-<h4 align="center">A minimal Markdown Editor desktop app built on top of <a href="http://electron.atom.io" target="_blank">Electron</a>.</h4>
+<h4 align="center">A minimal backend app using Java Springs, JPA, JDBC, Maven, and PostgreSql. Frontend coming soon<a href="" target="_blank">Carbooking Services</a>.</h4>
 
-<p align="center">
+<!-- <p align="center">
   <a href="https://badge.fury.io/js/electron-markdownify">
     <img src="https://badge.fury.io/js/electron-markdownify.svg"
          alt="Gitter">
@@ -22,7 +21,7 @@
   <a href="https://www.paypal.me/AmitMerchant">
     <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat">
   </a>
-</p>
+</p> -->
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
