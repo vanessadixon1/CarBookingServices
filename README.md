@@ -32,7 +32,7 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](src/main/resources/static/Recording #2.mp4)
+![screenshot](https://raw.githubusercontent.com/vanessadixon1/CarBookingServices/blob/main/src/main/resources/static/Recording%20%232.mp4)
 
 ## Key Features
 
