@@ -32,8 +32,10 @@
 </p>
 
 <p align="center">
-![screenshot](https://raw.githubusercontent.com/vanessadixon1/CarBookingServices/main/src/main/resources/static/kiapi.gif )
+<img width="430" src="https://raw.githubusercontent.com/vanessadixon1/CarBookingServices/main/src/main/resources/static/kiapi.gif" />
 </p>
+
+
 
 ## Key Features
 
