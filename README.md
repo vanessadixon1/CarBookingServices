@@ -32,7 +32,7 @@
 </p>
 
 <p align="center">
-![video](https://raw.githubusercontent.com/vanessadixon1/CarBookingServices/main/src/main/resources/static/kiapi.gif )
+![screenshot](https://raw.githubusercontent.com/vanessadixon1/CarBookingServices/main/src/main/resources/static/kiapi.gif )
 </p>
 
 ## Key Features
