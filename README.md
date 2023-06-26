@@ -31,7 +31,7 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/vanessadixon1/CarBookingServices/main/src/main/resources/static/kiapi.gif)
+![screenshot](https://raw.githubusercontent.com/vanessadixon1/CarBookingServices/main/src/main/resources/static/kiapi.gif width="250" height="250")
 
 ## Key Features
 
