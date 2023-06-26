@@ -1,4 +1,4 @@
-package com.amcsoftware.carbookingservices.jpaDataAccess;
+package com.amcsoftware.carbookingservices.service.jpaDataAccess;
 
 import com.amcsoftware.carbookingservices.dao.MemberDao;
 import com.amcsoftware.carbookingservices.model.Member;

@@ -1,10 +1,10 @@
-package com.amcsoftware.carbookingservices.jpaDataAccess;
+package com.amcsoftware.carbookingservices.service.jpaDataAccess;
 
 import com.amcsoftware.carbookingservices.dao.CarDao;
-import com.amcsoftware.carbookingservices.dao.ReservationDao;
 import com.amcsoftware.carbookingservices.model.Car;
 import com.amcsoftware.carbookingservices.model.Member;
 import com.amcsoftware.carbookingservices.model.Reservation;
+import com.amcsoftware.carbookingservices.repository.CarRepository;
 import com.amcsoftware.carbookingservices.repository.MemberRepository;
 import com.amcsoftware.carbookingservices.repository.ReservationRepository;
 import org.springframework.stereotype.Repository;
@@ -13,14 +13,62 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository("reservationJpa")
-public class ReservationJpaDataAccessService implements ReservationDao  {
+@Repository("carJpa")
+public class CarJpaDataAccessService implements CarDao {
+
+    private final CarRepository carRepository;
     private final MemberRepository memberRepository;
     private final ReservationRepository reservationRepository;
 
-    public ReservationJpaDataAccessService(MemberRepository memberRepository, ReservationRepository reservationRepository) {
+    public CarJpaDataAccessService(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository) {
+        this.carRepository = carRepository;
         this.memberRepository = memberRepository;
         this.reservationRepository = reservationRepository;
+    }
+
+    @Override
+    public boolean carExistByMake(String make) {
+        return carRepository.existsByMake(make);
+    }
+
+    @Override
+    public Long carCount() {
+        return carRepository.count();
+    }
+
+    @Override
+    public List<Car> getAllCars() {
+        return carRepository.findAll();
+    }
+
+    @Override
+    public List<Car> getAllCars(String make) {
+        return carRepository.findCarsByMake(make);
+    }
+
+    @Override
+    public List<Car> getAllCars(String make, String model) {
+        return carRepository.findCarsByMakeAndModel(make, model);
+    }
+
+    @Override
+    public Car findCarById(UUID id) {
+        return carRepository.findCarByCarId(id);
+    }
+
+    @Override
+    public boolean carExistById(UUID id) {
+        return carRepository.existsByCarId(id);
+    }
+
+    @Override
+    public void removeCar(Car car) {
+        carRepository.delete(car);
+    }
+
+    @Override
+    public void saveCar(Car car) {
+        carRepository.save(car);
     }
 
     @Override
@@ -110,13 +158,14 @@ public class ReservationJpaDataAccessService implements ReservationDao  {
 
     @Override
     public Reservation findReservationByCar(Car car) {
-        return reservationRepository.findReservationByCar(car);
+        return null;
     }
 
     @Override
     public Member findMemberById(UUID id) {
         return memberRepository.findByUserId(id);
     }
+
 
 
 }
