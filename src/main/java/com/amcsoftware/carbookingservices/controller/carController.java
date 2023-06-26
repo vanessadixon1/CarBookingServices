@@ -35,7 +35,7 @@ public class carController {
         return carService.getCars(make, model);
     }
 
-    @DeleteMapping("/removeCar/{id}")
+    @DeleteMapping("/removecar/{id}")
     public ResponseEntity<CustomResponse> removeCarWithId(@PathVariable("id") UUID id) {
         carService.removeCarWithId(id);
         CustomResponse response = new CustomResponse();
@@ -43,7 +43,7 @@ public class carController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PutMapping("/updateCar/{id}")
+    @PutMapping("/updatecar/{id}")
     public ResponseEntity<CustomResponse> updateCar(@PathVariable("id") UUID id, @RequestBody Car car) {
         carService.updateCar(id, car);
         CustomResponse response = new CustomResponse();
