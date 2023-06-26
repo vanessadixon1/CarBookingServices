@@ -1,12 +1,11 @@
 package com.amcsoftware.carbookingservices.service;
 
-import com.amcsoftware.carbookingservices.exceptions.ResourceExist;
-import com.amcsoftware.carbookingservices.exceptions.ResourceNotFound;
-import com.amcsoftware.carbookingservices.jpaDataAccess.ReservationJpaDataAccessService;
+import com.amcsoftware.carbookingservices.dao.ReservationDao;
+import com.amcsoftware.carbookingservices.exceptions.DuplicateResourceException;
+import com.amcsoftware.carbookingservices.exceptions.ResourceNotFoundException;
 import com.amcsoftware.carbookingservices.model.Member;
 import com.amcsoftware.carbookingservices.model.Reservation;
-import com.amcsoftware.carbookingservices.repository.MemberRepository;
-import com.amcsoftware.carbookingservices.repository.ReservationRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,32 +16,34 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ReservationService extends ReservationJpaDataAccessService {
+public class ReservationService {
 
-    public ReservationService(MemberRepository memberRepository, ReservationRepository reservationRepository) {
-        super(memberRepository, reservationRepository);
+    private final ReservationDao reservationDao;
+
+    public ReservationService(@Qualifier("reservationJpa") ReservationDao reservationDao) {
+        this.reservationDao = reservationDao;
     }
 
     public List<Reservation> findAllReservations() {
-        if(reservationCount() != 0) {
-            return getAllReservations();
+        if(reservationDao.reservationCount() != 0) {
+            return reservationDao.getAllReservations();
         } else {
             throw new NullPointerException("no reservations available");
         }
     }
 
     public Member getMember(UUID userId) {
-        return findMemberById(userId);
+        return reservationDao.findMemberById(userId);
     }
 
     public void addReservation(Reservation reservation) {
         //todo: validate no one has the car that the user is trying to reserve before booking
         //todo: redo method
 
-        Member locateMember = findMemberById(reservation.getMember().getUserId());
+        Member locateMember = reservationDao.findMemberById(reservation.getMember().getUserId());
 
-        if(reservationContainCar(reservation.getCar())) {
-            Reservation res = findReservationByCar(reservation.getCar());
+        if(reservationDao.reservationContainCar(reservation.getCar())) {
+            Reservation res = reservationDao.findReservationByCar(reservation.getCar());
             LocalDate currentBorrowerReturnDate = res.getReturnDate();
             if(currentBorrowerReturnDate.isBefore(reservation.getPickupDate()) &&
                     reservation.getPickupDate().isAfter(LocalDate.now().minus(1L, ChronoUnit.DAYS)) &&
@@ -51,10 +52,10 @@ public class ReservationService extends ReservationJpaDataAccessService {
 
                 locateMember.getReservations().add(reservation);
 
-                saveReservation(reservation);
+                reservationDao.saveReservation(reservation);
 
             }
-        }else if(!locateMember.getReservations().contains(reservation) && !reservationContainCar(reservation.getCar()) &&
+        }else if(!locateMember.getReservations().contains(reservation) && !reservationDao.reservationContainCar(reservation.getCar()) &&
                 reservation.getPickupDate().isAfter(LocalDate.now().minus(1L, ChronoUnit.DAYS)) &&
                 reservation.getReturnDate().isAfter(LocalDate.now())) {
 
@@ -62,29 +63,29 @@ public class ReservationService extends ReservationJpaDataAccessService {
 
             locateMember.getReservations().add(reservation);
 
-            saveReservation(reservation);
+            reservationDao.saveReservation(reservation);
 
         } else {
-            throw new ResourceExist("reservation [%s] ".formatted(reservation)+ " already exist");
+            throw new DuplicateResourceException("reservation [%s] ".formatted(reservation)+ " already exist");
         }
     }
 
     public void removeReservation(UUID reservationId) {
         Reservation reservation = findReservation(reservationId);
-        Member locateMember = findMemberById(reservation.getMember().getUserId());
+        Member locateMember = reservationDao.findMemberById(reservation.getMember().getUserId());
 
-        if(existsById(reservationId) &&
+        if(reservationDao.existsById(reservationId) &&
                 locateMember.getReservations().stream().anyMatch(r -> r.getReservationId().equals(reservationId))) {
             locateMember.getReservations().remove(reservation);
-            deleteReservation(reservation);
+            reservationDao.deleteReservation(reservation);
         } else {
-            throw new ResourceNotFound("reservation id ".formatted(reservationId) + " doesn't exist ");
+            throw new ResourceNotFoundException("reservation id ".formatted(reservationId) + " doesn't exist ");
         }
     }
 
     public Reservation findReservation(UUID reservationId) {
-         return findReservationById(reservationId).orElseThrow(() ->
-                 new ResourceNotFound("reservation [%s]".formatted(reservationId) + " doesn't exist"));
+         return reservationDao.findReservationById(reservationId).orElseThrow(() ->
+                 new ResourceNotFoundException("reservation [%s]".formatted(reservationId) + " doesn't exist"));
     }
 
     public void updateReservation(UUID reservationId, Reservation reservation) {
@@ -109,7 +110,7 @@ public class ReservationService extends ReservationJpaDataAccessService {
 
         locatedReservation.setCreateAt(LocalDateTime.now());
 
-        saveReservation(locatedReservation);
+        reservationDao.saveReservation(locatedReservation);
 
     }
 

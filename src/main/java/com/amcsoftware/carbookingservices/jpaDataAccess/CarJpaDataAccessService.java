@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository
+@Repository("carJpa")
 public class CarJpaDataAccessService implements CarDao {
 
     private final CarRepository carRepository;
@@ -69,11 +69,6 @@ public class CarJpaDataAccessService implements CarDao {
     @Override
     public void saveCar(Car car) {
         carRepository.save(car);
-    }
-
-    @Override
-    public void saveAllCars(List<Car> cars) {
-        carRepository.saveAll(cars);
     }
 
     @Override
@@ -159,6 +154,11 @@ public class CarJpaDataAccessService implements CarDao {
     @Override
     public boolean reservationContainCar(Car car) {
         return reservationRepository.existsReservationByCar(car);
+    }
+
+    @Override
+    public Reservation findReservationByCar(Car car) {
+        return null;
     }
 
     @Override

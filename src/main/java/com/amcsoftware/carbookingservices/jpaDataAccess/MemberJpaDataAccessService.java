@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository
+@Repository("memberJpa")
 public class MemberJpaDataAccessService implements MemberDao {
 
     private final MemberRepository memberRepository;

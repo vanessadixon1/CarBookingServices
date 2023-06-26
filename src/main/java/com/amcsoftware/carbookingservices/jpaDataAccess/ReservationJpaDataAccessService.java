@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository
+@Repository("reservationJpa")
 public class ReservationJpaDataAccessService implements ReservationDao  {
     private final MemberRepository memberRepository;
     private final ReservationRepository reservationRepository;

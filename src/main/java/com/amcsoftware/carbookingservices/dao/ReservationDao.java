@@ -17,5 +17,4 @@ public interface ReservationDao extends MemberDao {
     Optional<Reservation> findReservationById(UUID id);
     boolean reservationContainCar(Car car);
     Reservation findReservationByCar(Car car);
-
 }

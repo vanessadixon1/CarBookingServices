@@ -21,8 +21,8 @@ public class carController {
     }
 
     @GetMapping()
-    public List<Car> getCars() {
-       return carService.getAllCars();
+    public List<Car> getAvailableCars() {
+       return carService.getCars();
     }
 
     @GetMapping("/{make}")

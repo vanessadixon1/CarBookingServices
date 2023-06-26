@@ -16,20 +16,16 @@ import java.util.UUID;
 public class reservationController {
 
     private final ReservationService reservationService;
-    Member member = new Member();
 
     public reservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
-    @ResponseBody
     @GetMapping()
     public List<Reservation> getReservations() {
-
         return reservationService.findAllReservations();
     }
 
-    @ResponseBody
     @PostMapping("/book")
     public ResponseEntity<CustomResponse> addReservations(@RequestBody Reservation reservation) {
          reservationService.addReservation(reservation);

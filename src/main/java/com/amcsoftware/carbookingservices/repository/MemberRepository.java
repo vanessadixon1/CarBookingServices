@@ -1,7 +1,6 @@
 package com.amcsoftware.carbookingservices.repository;
 
 import com.amcsoftware.carbookingservices.model.Member;
-import com.amcsoftware.carbookingservices.model.Reservation;
 import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.UUID;

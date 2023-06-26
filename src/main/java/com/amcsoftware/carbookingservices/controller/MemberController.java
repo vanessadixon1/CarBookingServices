@@ -35,13 +35,11 @@ public class MemberController {
         return memberService.getMembers();
     }
 
-    @ResponseBody
     @GetMapping("/")
     public Member getMembers(@RequestParam(value = "lastname") String lastName, @RequestParam(value = "email") String email) {
         return memberService.findLastNameAndEmail(lastName, email);
     }
 
-    @ResponseBody
     @GetMapping("/{email}")
     public Member getMembers(@PathVariable("email") String email) {
         return memberService.findMemberWithEmail(email);
@@ -62,6 +60,5 @@ public class MemberController {
         response.setMessage("updated successfully");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
 
 }
