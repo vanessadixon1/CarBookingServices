@@ -219,7 +219,7 @@ public class MemberService {
 
     private void validateValuesWerePassed(Member member) {
         if(member.getFirstName().equals("") || member.getLastName().equals("") || member.getPhoneNumber().equals("") ||
-                member.getEmail().equals("") || member.getDateOfBirth().equals("") || member.getStreetNo() != 0 ||
+                member.getEmail().equals("") || member.getDateOfBirth() == null || member.getStreetNo() == 0 ||
                 member.getStreetAddress().equals("") || member.getCity().equals("") || member.getState().equals("")) {
 
             throw new BadRequestException("invalid values sent through request");
