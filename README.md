@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-<img width="400" src="https://raw.githubusercontent.com/vanessadixon1/CarBookingServices/main/src/main/resources/static/apivideo.gif"/>
+<img width="700" src="https://raw.githubusercontent.com/vanessadixon1/CarBookingServices/main/src/main/resources/static/apivideo.gif"/>
 </p>
 
 
