@@ -165,7 +165,7 @@ public class MemberService {
             changed = true;
         }
 
-        if(!locatedMember.getMiddleInitial().equals(member.getMiddleInitial())) {
+        if(member.getMiddleInitial() == null || !locatedMember.getMiddleInitial().equals(member.getMiddleInitial())) {
             locatedMember.setMiddleInitial(member.getMiddleInitial());
             changed = true;
         }
@@ -220,8 +220,7 @@ public class MemberService {
     private void validateValuesWerePassed(Member member) {
         if(member.getFirstName().equals("") || member.getLastName().equals("") || member.getPhoneNumber().equals("") ||
                 member.getEmail().equals("") || member.getDateOfBirth().equals("") || member.getStreetNo() != 0 ||
-                member.getStreetAddress().equals("") || member.getCity().equals("") || member.getState().equals("") ||
-                member.getZipCode() != 0) {
+                member.getStreetAddress().equals("") || member.getCity().equals("") || member.getState().equals("")) {
 
             throw new BadRequestException("invalid values sent through request");
         }
